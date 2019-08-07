@@ -4,52 +4,44 @@
 
 #define DEFAULT_LENGTH 100
 
-template <class stackType>
-class Stack {
+template <class type> class Stack {
 private:
-    stackType* stackArray;
-    int stackSize = 0;
-    int topIndex = 0;
+  type *stackArray;
+  int stackSize = 0;
+  int topIndex = 0;
+
 public:
-    Stack()
-    {
-        stackArray = new stackType[DEFAULT_LENGTH];
-        stackSize = DEFAULT_LENGTH;
-    }
+  Stack() {
+    stackArray = new type[DEFAULT_LENGTH];
+    stackSize = DEFAULT_LENGTH;
+  }
 
-    Stack(int length)
-    {
-        stackArray = new stackType[length];
-        stackSize = length;
-    }
+  Stack(int length) {
+    stackArray = new type[length];
+    stackSize = length;
+  }
 
-    bool push(stackType var)
-    {
-        if (isFull()) return false;
+  bool push(type var) {
+    if (isFull())
+      return false;
 
-        stackArray[topIndex++] = var;
-        return true;
-    }
+    stackArray[topIndex++] = var;
+    return true;
+  }
 
-    stackType pop()
-    {
-        if (isEmpty()) return stackArray[0];
-        return stackArray[--topIndex];
-    }
+  type pop() {
+    if (isEmpty())
+      return stackArray[0];
+    return stackArray[--topIndex];
+  }
 
-    stackType top()
-    {
-        if (isEmpty()) return stackArray[0];
-        return stackArray[topIndex - 1];
-    }
+  type top() {
+    if (isEmpty())
+      return stackArray[0];
+    return stackArray[topIndex - 1];
+  }
 
-    bool isFull()
-    {
-        return topIndex >= stackSize;
-    }
+  bool isFull() { return topIndex >= stackSize; }
 
-    bool isEmpty()
-    {
-        return topIndex <= 0;
-    }
+  bool isEmpty() { return topIndex <= 0; }
 };
