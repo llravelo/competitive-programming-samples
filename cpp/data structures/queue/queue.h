@@ -4,66 +4,55 @@
 
 #define DEFAULT_LENGTH 100
 
-template <class queueType>
-class Queue {
+template <class type> class Queue {
 private:
-    int head, tail, length;
-    queueType* queueArray;
+  int head, tail, length;
+  type *queueArray;
 
-    int increment(int index)
-    {
-        if (index >= length-1) return 0;
-        return index + 1;
-    }
+  int increment(int index) {
+    if (index >= length - 1)
+      return 0;
+    return index + 1;
+  }
+
 public:
-    Queue()
-    {
-        queueArray = new queueType[DEFAULT_LENGTH];
-        head = 0;
-        tail = 0;
-        length = DEFAULT_LENGTH;
-    }
+  Queue() {
+    queueArray = new type[DEFAULT_LENGTH];
+    head = 0;
+    tail = 0;
+    length = DEFAULT_LENGTH;
+  }
 
-    Queue(int len)
-    {
-        queueArray = new queueType[len];
-        head = 0;
-        tail = 0;
-        length = len;
-    }
+  Queue(int len) {
+    queueArray = new type[len];
+    head = 0;
+    tail = 0;
+    length = len;
+  }
 
-    bool enqueue(queueType var)
-    {
-        if (isFull()) return false;
+  bool enqueue(type var) {
+    if (isFull())
+      return false;
 
-        queueArray[tail] = var;
-        tail = increment(tail);
+    queueArray[tail] = var;
+    tail = increment(tail);
 
-        return true;
-    }
+    return true;
+  }
 
-    queueType dequeue()
-    {
-        if (isEmpty()) return queueArray[head];
+  type dequeue() {
+    if (isEmpty())
+      return queueArray[head];
 
-        queueType var = queueArray[head];
-        head = increment(head);
+    type var = queueArray[head];
+    head = increment(head);
 
-        return var;
-    }
+    return var;
+  }
 
-    queueType first()
-    {
-        return queueArray[head];
-    }
+  type first() { return queueArray[head]; }
 
-    bool isFull()
-    {
-        return increment(tail) == head;
-    }
+  bool isFull() { return increment(tail) == head; }
 
-    bool isEmpty()
-    {
-        return head == tail;
-    }
+  bool isEmpty() { return head == tail; }
 };
