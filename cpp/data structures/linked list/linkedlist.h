@@ -1,55 +1,93 @@
 // A linked-list is a dynamic list of elements, with pointers to the next
 // It has the advantage of dynamic memory allocation
-// increasing or decreasing in size as needed unlike arrays with a predefined size
-// However, It comes at a cost of not being cache friendly
-// So sequential traversal will have additional overhead compared to arrays
+// increasing or decreasing in size as needed unlike arrays with a predefined
+// size However, It comes at a cost of not being cache friendly So sequential
+// traversal will have additional overhead compared to arrays
 
-template <class elementType>
-struct linkedlist {
-    elementType val;
-    struct linkedlist* next;
+template <class type> struct node {
+  type val;
+  struct node *next;
 };
 
-template <class elementType>
-struct doubly_linkedlist {
-    elementType val;
-    struct double_linkedlist* prev;
-    struct double_linkedlist* next;
+template <class type> struct doubly_node {
+  type val;
+  struct doubly_node *prev;
+  struct doubly_node *next;
 };
 
-template <class elementType>
-struct linkedlist<elementType>* search_node(struct linkedlist<elementType>* root, elementType value)
-{
-    
-}
+// Basic Operations: Insert, Search, Delete
+// Singly Linked List
 
-template <class elementType>
-void delete_node(struct linkedlist<elementType>* root, elementType value)
-{
-    if (root == nullptr) return;
+template <class type> class LinkedList {
+private:
+  struct node<type> *root;
 
-    struct linkedlist<elementType> cur = root;
-    if (cur->val == value) {
-        delete root;
-        root = nullptr;
+public:
+  LinkedList() { root = nullptr; }
 
+  struct node<type> *getRoot() {
+    return root;
+  }
+
+  void
+  insertNode(type value) {
+    struct node<type> *temp = new struct node<type>;
+    temp->val = value;
+    temp->next = nullptr;
+
+    if (root == nullptr) {
+      root = temp;
+      return;
+    }
+
+    struct node<type> *cur = root;
+    if (root->val > temp->val) {
+      temp->next = root;
+      root = temp;
+      return;
+    }
+
+    while (cur->next != nullptr) {
+      if (cur->next->val > temp->val)
+        break;
+      cur = cur->next;
+    }
+
+    temp->next = cur->next;
+    cur->next = temp;
+  }
+
+  struct node<type> *searchNode(type value) {
+    struct node<type> *cur = root;
+
+    while (cur != nullptr) {
+      if (cur->val == value)
+        break;
+      cur = cur->next;
+    }
+
+    return cur;
+  }
+
+  void
+  deleteNode(type value) {
+    if (root == nullptr)
+      return;
+
+    struct node<type> *cur = root;
+    struct node<type> *prev = cur;
+
+    while (cur != nullptr) {
+      if (cur->val == value) {
+        if (cur == root)
+          root = root->next;
+
+        prev->next = cur->next;
+        delete cur;
         return;
+      }
+      prev = cur;
+      cur = cur->next;
     }
-
-    struct linkedlist<elementType> prev = root;
-    cur = root->next;
-
-    while (cur != nullptr)
-    {
-        if (cur->val == value)
-        {
-            prev->next = cur->next;
-            delete cur;
-
-            return;
-        }
-
-        prev = cur;
-        cur = cur->next;
-    }
-}
+  }
+};
